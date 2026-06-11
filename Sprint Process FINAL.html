@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Development Sprint Process</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fff;
+    color: #1a1a2e;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .page {
+    width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 28px 32px 24px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 16px;
+  }
+  .header-left h1 {
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1.05;
+    color: #1a1a2e;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+  }
+  .header-left .tagline {
+    font-size: 11.5px;
+    color: #666;
+    margin-top: 6px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .header-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px 16px;
+    min-width: 340px;
+  }
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stat-icon {
+    font-size: 18px;
+    color: #555;
+  }
+  .stat-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #999;
+    font-weight: 600;
+    border-bottom: 1.5px solid #ccc;
+    padding-bottom: 1px;
+    margin-bottom: 1px;
+    display: block;
+  }
+  .stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1;
+  }
+  .stat-value.monday {
+    font-size: 15px;
+    color: #f6521e;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .monday-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+  /* ── SECTION TITLES ── */
+  .section-title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #1a1a2e;
+    margin-bottom: 14px;
+  }
+
+  /* ── MEETINGS SECTION ── */
+  .meetings-section {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 16px 16px 14px;
+    margin-bottom: 16px;
+  }
+  .meetings-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .meeting-card {
+    padding: 0;
+  }
+  .meeting-number {
+    font-size: 10px;
+    color: #aaa;
+    font-weight: 600;
+  }
+  .meeting-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0 6px;
+  }
+  .meeting-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .meeting-icon.green { background: #e6f4ea; }
+  .meeting-icon.blue { background: #e8f0fe; }
+  .meeting-icon.orange { background: #fff3e0; }
+  .meeting-icon.purple { background: #f3e5f5; }
+
+  .meeting-name {
+    font-size: 11.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #1a1a2e;
+    line-height: 1.2;
+  }
+  .meeting-time {
+    font-size: 10.5px;
+    color: #555;
+    margin-bottom: 6px;
+  }
+  .meeting-time span { color: #f6521e; font-weight: 700; }
+  .meeting-desc {
+    font-size: 11px;
+    color: #555;
+    line-height: 1.45;
+  }
+  .meeting-divider {
+    width: 1px;
+    background: #e5e5e5;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline-section {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 14px 18px 16px;
+    margin-bottom: 16px;
+  }
+  .timeline-weeks {
+    display: flex;
+    gap: 0;
+    margin-bottom: 6px;
+  }
+  .week-label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .week-label span {
+    font-size: 10px;
+    font-weight: 700;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+  .week-bar { height: 3px; border-radius: 2px; }
+  .week-bar.green { background: #34a853; }
+  .week-bar.blue { background: #4285f4; }
+  .week1 { flex: 2; margin-right: 8px; }
+  .week2 { flex: 5; }
+
+  .timeline-cols {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr 2fr 1fr 1fr 1fr 1fr;
+    gap: 0;
+    margin-top: 8px;
+  }
+  .tl-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 2px;
+  }
+  .tl-day {
+    font-size: 10px;
+    font-weight: 800;
+    color: #555;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+  .tl-icon {
+    font-size: 18px;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+  .tl-dot-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 2px 0 6px;
+    position: relative;
+  }
+  .tl-line {
+    flex: 1;
+    height: 2px;
+    background: #d0d0d0;
+  }
+  .tl-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #4285f4;
+    background: #fff;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .tl-dot.filled { background: #4285f4; }
+  .tl-dot.orange { box-shadow: 0 0 0 2px #f6521e; }
+  .tl-dot.orange.filled { background: #f6521e; }
+  .tl-dot.purple { box-shadow: 0 0 0 2px #9c27b0; }
+  .tl-dot.purple.filled { background: #9c27b0; }
+  .tl-dot.green { box-shadow: 0 0 0 2px #34a853; }
+  .tl-dot.green.filled { background: #34a853; }
+
+  .tl-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+  }
+  .tl-desc {
+    font-size: 9.5px;
+    color: #666;
+    text-align: center;
+    line-height: 1.35;
+  }
+
+  /* ── LOWER TWO-COLUMN ── */
+  .lower-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  /* ── BEFORE SPRINT PLANNING ── */
+  .before-sprint {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .before-sprint .section-title { text-align: left; margin-bottom: 12px; }
+
+  .day-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .day-badge {
+    min-width: 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .day-name {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+  .day-name.green { background: #34a853; }
+  .day-name.blue { background: #4285f4; }
+  .day-name.purple { background: #9c27b0; }
+  .day-sub { font-size: 9px; color: #888; font-weight: 500; }
+  .day-icon { font-size: 20px; }
+
+  .day-content h4 {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #4285f4;
+    margin-bottom: 4px;
+  }
+  .day-content ul {
+    padding-left: 14px;
+    color: #555;
+    font-size: 10.5px;
+    line-height: 1.5;
+  }
+
+  /* ── UNPLANNED WORK ── */
+  .unplanned {
+    border: 1.5px solid #e8d0d0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    background: #fffafa;
+  }
+  .unplanned .section-title { text-align: left; color: #c62828; }
+
+  .unplanned-main {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .approval-badge {
+    background: #c62828;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 1.3;
+    min-width: 72px;
+    height: fit-content;
+  }
+  .unplanned-steps {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .step-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #c62828;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-text { font-size: 11px; color: #444; line-height: 1.4; }
+  .tag-pill {
+    display: inline-block;
+    background: #f44336;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 3px;
+    vertical-align: middle;
+  }
+  .tag-pill.dark { background: #1a1a2e; color: #fff; }
+  .unplanned-note {
+    font-size: 10.5px;
+    color: #555;
+    line-height: 1.5;
+    padding-top: 8px;
+    border-top: 1px solid #e0d0d0;
+  }
+  .code-tag {
+    display: inline-block;
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 9.5px;
+    font-family: monospace;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin: 0 2px;
+    vertical-align: middle;
+  }
+
+  /* ── KEY CHANGES ── */
+  .key-changes {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .change-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .check-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #1a73e8;
+    color: #fff;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .change-content h4 {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #1a73e8;
+    margin-bottom: 2px;
+  }
+  .change-content p { font-size: 10.5px; color: #555; line-height: 1.4; }
+
+  /* ── TICKET MANAGEMENT ── */
+  .ticket-mgmt {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .ticket-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+  .ticket-item {
+    display: flex;
+    gap: 10px;
+  }
+  .ticket-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .ticket-icon.orange { background: #fff3e0; }
+  .ticket-icon.teal { background: #e0f7fa; }
+  .ticket-icon.peach { background: #fce4ec; }
+
+  .ticket-label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #e65100;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+  }
+  .ticket-label.teal { color: #00695c; }
+  .ticket-label.peach { color: #c62828; }
+  .ticket-desc { font-size: 10px; color: #555; line-height: 1.4; }
+  .ticket-right { font-size: 10px; color: #555; line-height: 1.5; }
+  .ticket-right ul { padding-left: 12px; }
+
+  /* ── TICKET FLOW ── */
+  .ticket-flow {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .flow-box {
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1.5px solid;
+    white-space: nowrap;
+  }
+  .flow-box.grey { border-color: #bbb; color: #444; background: #f5f5f5; }
+  .flow-box.green { border-color: #34a853; color: #34a853; background: #e6f4ea; }
+  .flow-box.blue { border-color: #1a73e8; color: #1a73e8; background: #e8f0fe; }
+  .flow-box.orange { border-color: #f6521e; color: #f6521e; background: #fff3e0; }
+  .flow-box.yellow { border-color: #f9a825; color: #7a5000; background: #fff8e1; }
+  .flow-box.purple { border-color: #9c27b0; color: #9c27b0; background: #f3e5f5; }
+  .flow-box.teal { border-color: #00695c; color: #00695c; background: #e0f2f1; }
+  .flow-box.darkgreen { border-color: #2e7d32; color: #2e7d32; background: #e8f5e9; }
+
+  .flow-arrow { color: #aaa; font-size: 14px; font-weight: 700; }
+  .other-statuses {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 6px;
+  }
+  .other-label { font-size: 9.5px; color: #888; text-align: center; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+
+  /* ── TEAM EXPECTATIONS ── */
+  .team-exp {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+  }
+  .team-exp .section-title { text-align: left; font-size: 11px; margin-bottom: 10px; }
+  .exp-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 6px;
+  }
+  .exp-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+  }
+  .exp-icon { font-size: 16px; }
+  .exp-text { font-size: 9px; color: #555; line-height: 1.3; font-weight: 500; }
+
+  /* ── FOOTER ── */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1.5px solid #e0e0e0;
+    font-size: 10px;
+    color: #888;
+    font-weight: 500;
+  }
+  .footer-right {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #1a1a2e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  hr.divider { border: none; border-top: 1px solid #eee; margin: 10px 0; }
+
+  /* Two-col lower layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Development<br>Sprint Process</h1>
+      <div class="tagline">A 2-Week Cycle. Four Meetings. One Board.</div>
+    </div>
+    <div class="header-stats">
+      <div class="stat">
+        <span class="stat-icon">🔄</span>
+        <div>
+          <span class="stat-label">Cycle</span>
+          <div class="stat-value">2 WEEKS</div>
+        </div>
+      </div>
+      <div class="stat">
+        <span class="stat-icon">📅</span>
+        <div>
+          <span class="stat-label">Working Days</span>
+          <div class="stat-value">10</div>
+        </div>
+      </div>
+      <div class="stat">
+        <span class="stat-icon">👥</span>
+        <div>
+          <span class="stat-label">Meetings</span>
+          <div class="stat-value">4</div>
+        </div>
+      </div>
+      <div class="stat">
+        <span class="stat-icon">📋</span>
+        <div>
+          <span class="stat-label">Statuses</span>
+          <div class="stat-value">10</div>
+        </div>
+      </div>
+      <div class="stat" style="grid-column: span 2;">
+        <div>
+          <span class="stat-label">Tool</span>
+          <div class="stat-value monday">
+            <span style="color:#f6521e;">⬟</span>
+            <span style="color:#f6521e;">Monday</span><span style="color:#333;">.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOUR CORE MEETINGS -->
+  <div class="meetings-section">
+    <div class="section-title">Our Four Core Meetings</div>
+    <div class="meetings-grid">
+      <div class="meeting-card">
+        <div class="meeting-number">01</div>
+        <div class="meeting-header">
+          <div class="meeting-icon green">📅</div>
+          <div class="meeting-name">Sprint Planning</div>
+        </div>
+        <div class="meeting-time">Day 1 • Wed AM</div>
+        <div class="meeting-desc">Move refined items into the sprint and assign owners based on capacity.</div>
+      </div>
+      <div class="meeting-card">
+        <div class="meeting-number">02</div>
+        <div class="meeting-header">
+          <div class="meeting-icon blue">👥</div>
+          <div class="meeting-name">Daily Stand-Up</div>
+        </div>
+        <div class="meeting-time">Every day • <span>30 mins</span></div>
+        <div class="meeting-desc">Set &amp; track due dates, identify risks early and ask for support where needed.</div>
+      </div>
+      <div class="meeting-card">
+        <div class="meeting-number">03</div>
+        <div class="meeting-header">
+          <div class="meeting-icon orange">👁️</div>
+          <div class="meeting-name">Sprint Review</div>
+        </div>
+        <div class="meeting-time">Day 10 • Tue PM</div>
+        <div class="meeting-desc">Review completed work and sprint outcomes.</div>
+      </div>
+      <div class="meeting-card">
+        <div class="meeting-number">04</div>
+        <div class="meeting-header">
+          <div class="meeting-icon purple">🔻</div>
+          <div class="meeting-name">Refinement</div>
+        </div>
+        <div class="meeting-time">Day 10 • Tue PM</div>
+        <div class="meeting-desc">Triage the backlog and stage work for the next planning session.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2-WEEK SPRINT TIMELINE -->
+  <div class="timeline-section">
+    <div class="section-title">2-Week Sprint Timeline</div>
+    <div class="timeline-weeks">
+      <div class="week-label week1">
+        <span>Week 1</span>
+        <div class="week-bar green"></div>
+      </div>
+      <div class="week-label week2">
+        <span>Week 2</span>
+        <div class="week-bar blue"></div>
+      </div>
+    </div>
+    <div class="timeline-cols">
+      <!-- Wed -->
+      <div class="tl-col">
+        <div class="tl-day">Wed</div>
+        <div class="tl-icon">🚩</div>
+        <div class="tl-dot-row">
+          <div class="tl-line" style="flex:0;width:0;"></div>
+          <div class="tl-dot filled green"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-label">Sprint Starts</div>
+        <div class="tl-desc">Sprint Planning meeting in the morning. Sprint begins.</div>
+      </div>
+      <!-- Thu-Fri -->
+      <div class="tl-col">
+        <div class="tl-day">Thu – Fri</div>
+        <div class="tl-icon">👥</div>
+        <div class="tl-dot-row">
+          <div class="tl-line"></div>
+          <div class="tl-dot filled"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-label">Daily Stand-Ups</div>
+        <div class="tl-desc">30-minute stand-ups each day.</div>
+      </div>
+      <!-- Mon-Fri -->
+      <div class="tl-col">
+        <div class="tl-day">Mon – Fri</div>
+        <div class="tl-icon">👥</div>
+        <div class="tl-dot-row">
+          <div class="tl-line"></div>
+          <div class="tl-dot filled"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-label">Daily Stand-Ups</div>
+        <div class="tl-desc">30-minute stand-ups each day.</div>
+      </div>
+      <!-- Mon -->
+      <div class="tl-col">
+        <div class="tl-day">Mon</div>
+        <div class="tl-icon">👥</div>
+        <div class="tl-dot-row">
+          <div class="tl-line"></div>
+          <div class="tl-dot filled"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-label">Daily Stand-Up</div>
+        <div class="tl-desc">30-minute stand-up.</div>
+      </div>
+      <!-- Tue Sprint Review -->
+      <div class="tl-col">
+        <div class="tl-day">Tue</div>
+        <div class="tl-icon">👁️</div>
+        <div class="tl-dot-row">
+          <div class="tl-line"></div>
+          <div class="tl-dot filled orange"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-label">Sprint Review</div>
+        <div class="tl-desc">Review completed work in the afternoon.</div>
+      </div>
+      <!-- Tue Refinement -->
+      <div class="tl-col">
+        <div class="tl-day">Tue</div>
+        <div class="tl-icon">🔻</div>
+        <div class="tl-dot-row">
+          <div class="tl-line"></div>
+          <div class="tl-dot filled purple"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-label">Refinement</div>
+        <div class="tl-desc">Prepare backlog for the next sprint in the afternoon.</div>
+      </div>
+      <!-- Wed New Sprint -->
+      <div class="tl-col">
+        <div class="tl-day">Wed</div>
+        <div class="tl-icon">🚩</div>
+        <div class="tl-dot-row">
+          <div class="tl-line"></div>
+          <div class="tl-dot filled green"></div>
+          <div class="tl-line" style="flex:0;width:0;"></div>
+        </div>
+        <div class="tl-label">New Sprint Begins</div>
+        <div class="tl-desc">New sprint planning in the morning.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEFORE SPRINT + UNPLANNED -->
+  <div class="two-col">
+    <div class="before-sprint">
+      <div class="section-title">Before Sprint Planning</div>
+
+      <div class="day-row">
+        <div class="day-badge">
+          <div class="day-name green">Monday</div>
+          <div class="day-sub">(COP)</div>
+          <div class="day-icon">📅</div>
+        </div>
+        <div class="day-content">
+          <h4>Submit New Work via Workflow</h4>
+          <ul>
+            <li>Add to Dev Sprint Updates Slack channel using the workflow.</li>
+            <li>Include description, justification, estimate, dependencies.</li>
+            <li>Team review and decide if it enters the sprint or future.</li>
+            <li>You'll receive approval via the workflow.</li>
+            <li>If approved, move to "Selected for Development" in Monday.com.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-badge">
+          <div class="day-name blue">Tuesday</div>
+          <div class="day-sub">(by 2PM)</div>
+          <div class="day-icon">📅</div>
+        </div>
+        <div class="day-content">
+          <h4>Bring Backlog Items Forward</h4>
+          <ul>
+            <li>Move suitable backlog items to "Selected for Development".</li>
+            <li>Ensure tickets have tags, descriptions, estimates and all key details.</li>
+            <li>Team review in the 2PM call and decide if it enters the sprint or future.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-badge">
+          <div class="day-name purple">Wednesday</div>
+          <div class="day-sub">(AM)</div>
+          <div class="day-icon">📅</div>
+        </div>
+        <div class="day-content">
+          <h4>Review &amp; Prepare</h4>
+          <ul>
+            <li>Review the new sprint and assigned work.</li>
+            <li>Collate any questions in advance.</li>
+            <li>Be prepared to raise them in the 10:00AM sprint planning call.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="unplanned">
+      <div class="section-title">🔴 Unplanned Work Process</div>
+      <div class="unplanned-main">
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center;">
+          <div class="approval-badge">APPROVAL<br>REQUIRED</div>
+          <div style="font-size:24px;">📋⚠️</div>
+        </div>
+        <div class="unplanned-steps">
+          <div class="step-row">
+            <div class="step-num">01</div>
+            <div class="step-text">Run the workflow in #dev-sprint-updates</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">02</div>
+            <div class="step-text">Wait for approval</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">03</div>
+            <div class="step-text">Create the ticket, tag <span class="tag-pill">unplanned</span></div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">04</div>
+            <div class="step-text">Counted at the next review</div>
+          </div>
+        </div>
+      </div>
+      <div class="unplanned-note">
+        Any ticket created outside planning needs approval in <span class="code-tag">#dev-sprint-updates</span> and gets tagged <strong>"unplanned"</strong> in Monday.com.
+      </div>
+
+      <hr class="divider" style="margin-top:12px;">
+
+      <div class="section-title" style="text-align:left;margin-top:10px;margin-bottom:10px;color:#1a1a2e;">Key Changes</div>
+      <div class="change-item">
+        <div class="check-circle">✓</div>
+        <div class="change-content">
+          <h4>Daily Stand-Ups are now 30 minutes</h4>
+          <p>Focus on due dates, risks and support.</p>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="check-circle">✓</div>
+        <div class="change-content">
+          <h4>Due Dates are now required for all tasks</h4>
+          <p>Use realistic near-term (2–5 days) for urgent work, or end of sprint for non-urgent work.</p>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="check-circle">✓</div>
+        <div class="change-content">
+          <h4>Tuesday Mid-Sprint Meeting removed</h4>
+          <p>Replaced by enhanced daily stand-ups.</p>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="check-circle">✓</div>
+        <div class="change-content">
+          <h4>Unplanned Work Tracking</h4>
+          <p>All unplanned tasks must be raised via workflow, agreed by the team and tagged unplanned in Monday.com.</p>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="check-circle">✓</div>
+        <div class="change-content">
+          <h4>Ticket Updates Required</h4>
+          <p>Add updates in Monday.com (comment bubble) including progress, delays (internal/external) and early completions.</p>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="check-circle">✓</div>
+        <div class="change-content">
+          <h4>NEW: Profile Picture Update</h4>
+          <p>Ensure your Monday.com profile picture is up to date.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKET MANAGEMENT STANDARDS -->
+  <div class="ticket-mgmt">
+    <div class="section-title">Ticket Management Standards</div>
+    <div class="ticket-grid">
+      <div class="ticket-item">
+        <div class="ticket-icon orange">🗓️</div>
+        <div>
+          <div class="ticket-label">Due Dates (Mandatory)</div>
+          <div class="ticket-desc">Every task must have a due date.</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="ticket-right">• Near-term for urgent work (e.g. 2-5 days)</div>
+        <div class="ticket-right">• End of sprint for non-urgent work</div>
+      </div>
+      <div></div>
+
+      <div class="ticket-item">
+        <div class="ticket-icon teal">💬</div>
+        <div>
+          <div class="ticket-label teal">Ticket Updates (Mandatory)</div>
+          <div class="ticket-desc">Add updates in Monday.com (comment bubble). Include:</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="ticket-right">• Progress</div>
+        <div class="ticket-right">• Delays (internal / external)</div>
+        <div class="ticket-right">• Early completions</div>
+      </div>
+      <div class="ticket-right" style="color:#555;font-size:10px;line-height:1.5;">This helps with ownership and visibility across boards.</div>
+
+      <div class="ticket-item">
+        <div class="ticket-icon peach">😊</div>
+        <div>
+          <div class="ticket-label peach">Profile Picture</div>
+          <div class="ticket-desc">Please ensure your Monday.com profile picture is updated.</div>
+        </div>
+      </div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <!-- TICKET FLOW -->
+  <div class="ticket-flow">
+    <div class="section-title">Ticket Flow</div>
+    <div class="flow-row">
+      <div class="flow-box grey">Backlog</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box green" style="text-align:center;">Selected for<br>Development</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box blue">Todo</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box orange">In Progress</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box yellow">Testing</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box purple">PR</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box teal">Awaiting Deploy</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box darkgreen">Done</div>
+    </div>
+    <div class="other-label">Other Statuses</div>
+    <div class="other-statuses">
+      <div class="flow-box" style="border-color:#c62828;color:#c62828;background:#ffebee;">Blocked – Internal</div>
+      <div class="flow-box" style="border-color:#e65100;color:#e65100;background:#fff3e0;">Blocked – External</div>
+      <div class="flow-box grey">Cancelled</div>
+    </div>
+  </div>
+
+  <!-- TEAM EXPECTATIONS -->
+  <div class="team-exp">
+    <div class="section-title">Team Expectations</div>
+    <div class="exp-grid">
+      <div class="exp-item">
+        <div class="exp-icon">👥</div>
+        <div class="exp-text">Attend stand-ups</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon">🎫</div>
+        <div class="exp-text">Keep tickets updated</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon">📅</div>
+        <div class="exp-text">Set realistic due dates</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon">⚠️</div>
+        <div class="exp-text">Raise blockers early</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon">📋</div>
+        <div class="exp-text">Follow the unplanned work process</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon">😊</div>
+        <div class="exp-text">Keep profile updated</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon">👁️</div>
+        <div class="exp-text">Review work before planning meetings</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon">✅</div>
+        <div class="exp-text">Ensure tickets have all key information</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>SPR-PROC-001 &nbsp;•&nbsp; Sprint Process v2.0 &nbsp;•&nbsp; Updated 2026-05-14</div>
+    <div class="footer-right">Dev Team &nbsp;•&nbsp; Let's Build Great Things Together</div>
+  </div>
+
+</div>
+</body>
+</html>
